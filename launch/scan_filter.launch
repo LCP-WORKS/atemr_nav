@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG atemr)"/>
+  <arg name="scan_topic" default="$(arg domain)/laser/scan_filtered"/>
+
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="scan_filter_node">
+    <rosparam command="load" file="$(find atemr_nav)/config/cam_to_scan_filter.yaml" />
+    <remap from="scan" to="$(arg domain)/laser/scan"/>
+    <remap from="scan_filtered" to="$(arg scan_topic)"/>
+  </node>
+
+</launch>
