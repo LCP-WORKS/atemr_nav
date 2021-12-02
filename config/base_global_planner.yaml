@@ -1,6 +1,4 @@
-base_global_planner: global_planner/GlobalPlanner
-
 GlobalPlanner:
   planner_frequency: 1.0
-  planner_patience: 0.0
-  orientation_mode: 2 # interpolate from current orientation to last orientation
+  planner_patience: 2.0
+  orientation_mode: 3 # Forward orientation until last straightaway, then a linear blend until the goal pose

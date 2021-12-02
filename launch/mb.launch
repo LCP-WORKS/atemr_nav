@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG )"/>
+  <arg name="global_frame" default="$(optenv ROBOT_GLOBAL_FRAME_CONFIG map)"/>
+  <arg name="odom_frame" default="$(optenv ROBOT_ODOMETRY_FRAME_CONFIG odom)"/>
+  <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
+
+  <arg name="scan_topic" default="$(arg domain)/laser/scan_filtered"/>
+  <arg name="cam_to_scan_topic" default="$(arg domain)/laser/pcl_scan_filtered"/>
+  <arg name="rs_cam_topic" default="$(arg domain)/rs_cam/depth/points"/>
+  <arg name="cmd_vel_topic" default="$(arg domain)/cmd_vel"/>
+  <arg name="odom_topic" default="$(arg domain)/odometry/filtered_odom"/>
+
+  <arg name="local_planner_type" default="traj"/>
+
+  <!-- Navigation Parameters -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)" />
+    <remap from="odom" to="$(arg odom_topic)" />
+    <rosparam file="$(find atemr_nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find atemr_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find atemr_nav)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find atemr_nav)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find atemr_nav)/config/move_base_params.yaml" command="load" />
+    <rosparam file="$(find atemr_nav)/config/$(arg local_planner_type)_local_planner_params.yaml" command="load" />
+  </node>
+
+</launch>

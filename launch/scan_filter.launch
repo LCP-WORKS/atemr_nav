@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG atemr)"/>
+  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG )"/>
   <arg name="scan_topic" default="$(arg domain)/laser/scan_filtered"/>
 
   <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="scan_filter_node">

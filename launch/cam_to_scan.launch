@@ -1,7 +1,6 @@
-
 <?xml version="1.0"?>
 <launch>
-  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG atemr)"/>
+  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG )"/>
   <arg name="cam_to_scan_topic" default="$(arg domain)/laser/pcl_scan_filtered"/>
   <arg name="rs_cam_topic" default="$(arg domain)/rs_cam/depth/points"/>
 	

@@ -1,38 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="domain" default="$(optenv ROBOT_DOMAIN_CONFIG atemr)"/>
-  <arg name="global_frame" default="$(optenv ROBOT_GLOBAL_FRAME_CONFIG map)"/>
-  <arg name="odom_frame" default="$(optenv ROBOT_ODOMETRY_FRAME_CONFIG odom)"/>
-  <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
-
-  <arg name="scan_topic" default="$(arg domain)/laser/scan_filtered"/>
-  <arg name="cam_to_scan_topic" default="$(arg domain)/laser/pcl_scan_filtered"/>
-  <arg name="rs_cam_topic" default="$(arg domain)/rs_cam/depth/points"/>
-  <arg name="cmd_vel_topic" default="$(arg domain)/cmd_vel"/>
-  <arg name="odom_topic" default="$(arg domain)/odom"/>
-
-  <arg name="local_planner_type" default="dwa"/>
-
-  <master auto="start"/>
-  <!-- Run scan filters -->
-  <include file="$(find atemr_nav)/launch/cam_to_scan.launch" />
-  <include file="$(find atemr_nav)/launch/scan_filter.launch" />
-
-	<!-- Run the map server -->
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find atemr_localization)/map/blank.pgm blank_resolution"/>
-
   <!--- Run AMCL -->
   <include file="$(find atemr_localization)/launch/atemr_amcl.launch" />
-  <!-- Navigation Parameters -->
-  <rosparam file="$(find atemr_nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
-  <rosparam file="$(find atemr_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-  <rosparam file="$(find atemr_nav)/config/local_costmap_params.yaml" command="load" />
-  <rosparam file="$(find atemr_nav)/config/global_costmap_params.yaml" command="load" />
-  <rosparam file="$(find atemr_nav)/config/move_base_params.yaml" command="load" />
-  <rosparam file="$(find atemr_nav)/config/$(arg local_planner_type)_local_planner_params.yaml" command="load" />
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
-    <remap from="cmd_vel" to="$(arg cmd_vel_topic)" />
-    <remap from="odom" to="$(arg odom_topic)" />
-  </node>
+  <!-- Run move_base -->
+  <include file="$(find atemr_nav)/launch/mb.launch" />
+
+  <!-- Run the map server -->
+  <include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+    <arg name="time" value="2"/>
+    <arg name="pkg" value="atemr_localization"/>
+    <arg name="file" value="map_server.launch"/>
+  </include>
 
 </launch>
