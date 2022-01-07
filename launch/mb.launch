@@ -5,9 +5,6 @@
   <arg name="odom_frame" default="$(optenv ROBOT_ODOMETRY_FRAME_CONFIG odom)"/>
   <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
 
-  <arg name="scan_topic" default="$(arg domain)/laser/scan_filtered"/>
-  <arg name="cam_to_scan_topic" default="$(arg domain)/laser/pcl_scan_filtered"/>
-  <arg name="rs_cam_topic" default="$(arg domain)/rs_cam/depth/points"/>
   <arg name="cmd_vel_topic" default="$(arg domain)/cmd_vel"/>
   <arg name="odom_topic" default="$(arg domain)/odometry/filtered_odom"/>
 
