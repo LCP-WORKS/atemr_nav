@@ -5,10 +5,10 @@
   <arg name="odom_frame" default="$(optenv ROBOT_ODOMETRY_FRAME_CONFIG odom)"/>
   <arg name="base_frame" default="$(optenv ROBOT_BASE_FRAME_CONFIG base_footprint)"/>
 
-  <arg name="cmd_vel_topic" default="$(arg domain)/cmd_vel"/>
-  <arg name="odom_topic" default="$(arg domain)/odometry/filtered_odom"/>
+  <arg name="cmd_vel_topic" default="follow_path/cmd_vel"/>
+  <arg name="odom_topic" default="odometry/filtered_odom"/>
 
-  <arg name="local_planner_type" default="traj"/>
+  <arg name="local_planner_type" default="dwa"/>
 
   <!-- Navigation Parameters -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
@@ -18,8 +18,9 @@
     <rosparam file="$(find atemr_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find atemr_nav)/config/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find atemr_nav)/config/global_costmap_params.yaml" command="load" />
-    <rosparam file="$(find atemr_nav)/config/move_base_params.yaml" command="load" />
     <rosparam file="$(find atemr_nav)/config/$(arg local_planner_type)_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find atemr_nav)/config/base_global_planner.yaml" command="load" />
+    <rosparam file="$(find atemr_nav)/config/move_base_params.yaml" command="load" />
   </node>
 
 </launch>

@@ -2,10 +2,10 @@
 <launch>
   <!--- Run AMCL -->
   <include file="$(find atemr_localization)/launch/atemr_amcl.launch" />
-  <!-- Run move_base -->
+  <!-- Run Move Base -->
   <include file="$(find atemr_nav)/launch/mb.launch" />
 
-  <!-- Run the map server -->
+  <!-- Run the MAP Server -->
   <include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
     <arg name="time" value="2"/>
     <arg name="pkg" value="atemr_localization"/>
