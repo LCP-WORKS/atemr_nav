@@ -6,10 +6,10 @@
   <include file="$(find atemr_nav)/launch/mb.launch" />
 
   <!-- Run the MAP Server -->
-  <include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+  <!--include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
     <arg name="time" value="2"/>
     <arg name="pkg" value="atemr_localization"/>
     <arg name="file" value="map_server.launch"/>
-  </include>
+  </include-->
 
 </launch>
